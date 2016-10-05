@@ -15,6 +15,7 @@ public class Grid extends JFrame implements ActionListener
 	public Timer timer;
 	public boolean inGame =true;
 	public Moto_Lista moto;
+	private boolean RIGHT = true , LEFT = false, UP = false , DOWN = false;
 	
 	//constructor
 	public Grid()
