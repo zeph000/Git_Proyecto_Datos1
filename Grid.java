@@ -106,29 +106,41 @@ public class Grid extends JFrame implements ActionListener
 	    	
 	        int key = e.getKeyCode();
 
-	        if ((key == KeyEvent.VK_LEFT) & (dir!="right")) {
+	        if ((key == KeyEvent.VK_LEFT) && !RIGHT) {
 	            dir="left";
+	        	UP = false;
+	        	DOWN = false;
+	        	LEFT = true;
 	            System.out.println("left");
 		        moto.Head.direccion=dir;
 		        Move(moto);            
 	        }
 
-	        if ((key == KeyEvent.VK_RIGHT) & (dir!="left")) {
+	        if ((key == KeyEvent.VK_RIGHT) && !LEFT) {
 	            dir= "right";
+	        	UP = false;
+	        	DOWN = false;
+	        	RIGHT = true;
 	            System.out.println("right");
 		        moto.Head.direccion=dir;
 		        Move(moto);
 	        }
 
-	        if ((key == KeyEvent.VK_UP) & (dir!="down")) {
+	        if ((key == KeyEvent.VK_UP) && !DOWN) {
 	            dir="up";
+	        	LEFT = false;
+	        	RIGHT = false;
+	        	UP = true;
 	            System.out.println("up");
 		        moto.Head.direccion=dir;
 		        Move(moto);
 	        }
 
-	        if ((key == KeyEvent.VK_DOWN) & (dir!="up")) {
+	        if ((key == KeyEvent.VK_DOWN) && !UP) {
 	            dir="down";
+	        	LEFT = false;
+	        	RIGHT = false;
+	        	DOWN = true;
 	            System.out.println("down");
 		        moto.Head.direccion=dir;
 		        Move(moto);
