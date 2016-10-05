@@ -12,16 +12,16 @@ public class Cliente extends Conexion {
         try
         {            
             //Flujo de datos hacia el servidor
-            salidaServidor = new DataOutputStream(cs.getOutputStream());
+            salidaServidor = new DataOutputStream(socketcliente.getOutputStream());
 
             //Se enviarán dos mensajes
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 //Se escribe en el servidor usando su flujo de datos
-                salidaServidor.writeUTF("Este es el mensaje número " + (i+1) + "\n");                
+                salidaServidor.writeUTF("Mostrando datos" + (i+1) + "\n");                
             }           
 
-            cs.close();//Fin de la conexión
+            socketcliente.close();//Fin de la conexión
 
         }
         catch (Exception e)
