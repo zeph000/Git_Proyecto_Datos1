@@ -1,7 +1,4 @@
 import javax.swing.*;
-
-//import Board.TAdapter;
-
 import java.awt.*;
 import java.awt.Color;
 import java.awt.event.*;
@@ -15,6 +12,15 @@ public class Grid extends JFrame implements ActionListener
 	public Timer timer;
 	public boolean inGame =true;
 	public Moto_Lista moto;
+	
+	
+	
+	public boolean UP =false;
+	public boolean DOWN=false;
+	public boolean RIGHT=true;
+	public boolean LEFT=false;
+	
+	
 	
 	//constructor
 	public Grid()
@@ -66,9 +72,8 @@ public class Grid extends JFrame implements ActionListener
 		moto = new Moto_Lista();
 		Place(20,10,moto);
 		
-		timer = new Timer(15040, this);
+		timer = new Timer(200, this);
         timer.start();
-		
 	}
 	
 	//posiciona moto en en el grid
@@ -86,58 +91,68 @@ public class Grid extends JFrame implements ActionListener
 
 	}
 	
+	@Override
     public void actionPerformed(ActionEvent e) {
 
         if (inGame) {
 
-            //System.out.println("im playing nigga!");
-            //Move(moto);
+            Move(moto);
         }
         //Move(moto);
     }
-	// Adaptor que cambia la direccion de la moto dependiendo de la tecla
-	public class TAdapter extends KeyAdapter {
+    
+    
+	// Adaptor que cambia la direccion de la moto dependiendo de la t   checkCollisionecla
+    public class TAdapter extends KeyAdapter {
 
 	    //Override
-	    public void keyPressed(KeyEvent e/*, Moto_Lista m*/) {
+	    public void keyPressed(KeyEvent e) {
 	    	
 	    	String dir;
 	    	dir="up";
 	    	
 	        int key = e.getKeyCode();
 
-	        if ((key == KeyEvent.VK_LEFT) & (dir!="right")) {
+	        if ((key == KeyEvent.VK_LEFT) && !RIGHT) {
 	            dir="left";
-	            System.out.println("left");
+	        	UP = false;
+	        	DOWN = false;
+	        	LEFT = true;
 		        moto.Head.direccion=dir;
-		        Move(moto);            
+		        //Move(moto);            
 	        }
 
-	        if ((key == KeyEvent.VK_RIGHT) & (dir!="left")) {
+	        if ((key == KeyEvent.VK_RIGHT) && !LEFT) {
 	            dir= "right";
-	            System.out.println("right");
+	        	UP = false;
+	        	DOWN = false;
+	        	RIGHT = true;
 		        moto.Head.direccion=dir;
-		        Move(moto);
+		        //Move(moto);
 	        }
 
-	        if ((key == KeyEvent.VK_UP) & (dir!="down")) {
+	        if ((key == KeyEvent.VK_UP) && !DOWN) {
 	            dir="up";
-	            System.out.println("up");
+	        	LEFT = false;
+	        	RIGHT = false;
+	        	UP = true;
 		        moto.Head.direccion=dir;
-		        Move(moto);
+		        //Move(moto);
 	        }
 
-	        if ((key == KeyEvent.VK_DOWN) & (dir!="up")) {
+	        if ((key == KeyEvent.VK_DOWN) && !UP) {
 	            dir="down";
-	            System.out.println("down");
+	        	LEFT = false;
+	        	RIGHT = false;
+	        	DOWN = true;
 		        moto.Head.direccion=dir;
-		        Move(moto);
+		        //Move(moto);
 	        }
 	        
 
 	    }
 	}
-	
+
 	
 	//mueve los iconos de los nodods
 	
@@ -178,6 +193,15 @@ public class Grid extends JFrame implements ActionListener
 	}
 
 }
+
+
+
+
+
+
+
+
+
 
 
 
