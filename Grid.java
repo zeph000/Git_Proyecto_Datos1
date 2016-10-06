@@ -13,8 +13,14 @@ public class Grid extends JFrame implements ActionListener
 	public boolean inGame =true;
 	public Moto_Lista moto;
 	
+	// posicion de los items en el mapa
+	public Estela_item Estela_on_map;
+	public int estela_y;
+	public int estela_x;
 	
 	
+	
+	// parametros para permitir cambiar direccion de la moto
 	public boolean UP =false;
 	public boolean DOWN=false;
 	public boolean RIGHT=true;
@@ -50,13 +56,7 @@ public class Grid extends JFrame implements ActionListener
 	            	Nodo[i][j].left = Nodo[i][j-1];
 	        }   
 	    }
-	   
-	    //icon beta testing
-/*	    Estelita cola =new Estelita();
-	    Nodo[5][4].setIcon(MotoAUp);
-	    Nodo[6][4].setIcon(cola.Icon);
-	    //icon beta testing
-*/	    
+	       
 	    //parametros del grid
 	    
 		setSize(650,650);
@@ -67,7 +67,7 @@ public class Grid extends JFrame implements ActionListener
 		
 	
 	}
-
+// inicia el juegp
 	public void Start_Game(){
 		moto = new Moto_Lista();
 		Place(20,10,moto);
@@ -95,11 +95,37 @@ public class Grid extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent e) {
 
         if (inGame) {
+        	checkCollision();
+        	checkItems();
 
             Move(moto);
         }
-        //Move(moto);
     }
+	
+    private void checkItems() {
+
+        if ((moto.Head.Current.Yaxis == Estela_on_map.current.Yaxis) && (moto.Head.Current.Xaxis== Estela_on_map.current.Xaxis)) {
+
+            
+        	moto.Add_Estela();
+            
+            locateEstela();
+        }
+    }
+	
+    private void locateEstela() {
+    	
+    	int y = (int) (Math.random() * 30);
+        int x = (int) (Math.random() * 30);
+        
+        estela_y = y;
+        estela_x = x;
+        Estela_on_map=new Estela_item();
+        Estela_on_map.current=Nodo[y][x];
+        Nodo[y][x].setIcon(Estela_on_map.icon);
+    }
+
+	
     
     
 	// Adaptor que cambia la direccion de la moto dependiendo de la t   checkCollisionecla
@@ -153,8 +179,20 @@ public class Grid extends JFrame implements ActionListener
 	    }
 	}
 
+    public void checkCollision() {
+    	Estelita actual= moto.Head.Next;
+    	
+    	
+    	while(actual!=null){
+    		if( moto.Head.Current==actual.Current){
+    			inGame=false;
+    		}
+    		actual=actual.Next;
+    	}
+    }
+
 	
-	//mueve los iconos de los nodods
+	//mueve los iconos de los nodos
 	
 	public void Move(Moto_Lista Moto){
 		Nodo_Mapa point = Moto.Head.Current;
@@ -163,13 +201,14 @@ public class Grid extends JFrame implements ActionListener
 		Nodo_Mapa tail=Moto.tail.Current;
 		if(0<=y & y<30 & 0<=x & x<30){
 			Moto.Move2();
+			if(tail==null){
+			tail=Moto.tail.Current;
+			}			
 			point.setIcon(Moto.tail.Icon);
 			tail.setIcon(null);
 			point=Moto.Head.Current;
 			point.setIcon(Moto.Head.Icon);
-			}
-			
-		
+			}		
 	}
 	
 
@@ -184,7 +223,9 @@ public class Grid extends JFrame implements ActionListener
 		{
 			public void run(){
 				Grid malla = new Grid();
+				malla.locateEstela();
 				malla.Start_Game();
+				
 				
 				}
 		});
@@ -193,15 +234,6 @@ public class Grid extends JFrame implements ActionListener
 	}
 
 }
-
-
-
-
-
-
-
-
-
 
 
 
