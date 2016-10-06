@@ -1,10 +1,10 @@
 package sockets.main;
-
-import java.io.IOException;
+//Se importa los paquetes necesarios
+import java.io.*;
 import sockets.cliente.Cliente;
 
 
-//Clase principal que har· uso del cliente
+//Clase principal que har√° uso del cliente
 public class MainCliente {
 	
     public static void main(String[] args) throws IOException {  
